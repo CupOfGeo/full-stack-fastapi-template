@@ -33,9 +33,6 @@ def upgrade():
     )
     op.create_index(op.f('ix_premium_user_stripe_customer_id'), 'premium_user', ['stripe_customer_id'], unique=False)
     op.create_index(op.f('ix_premium_user_user_id'), 'premium_user', ['user_id'], unique=True)
-    op.drop_index(op.f('ix_premiumuser_stripe_customer_id'), table_name='premiumuser')
-    op.drop_index(op.f('ix_premiumuser_user_id'), table_name='premiumuser')
-    op.drop_table('premiumuser')
     # ### end Alembic commands ###
 
 

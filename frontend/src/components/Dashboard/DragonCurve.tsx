@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from "react"
 import { Box, Input, Text, VStack } from "@chakra-ui/react"
 import LSystem from "lindenmayer"
+import { useEffect, useRef, useState } from "react"
 
 /**
  * DragonCurve Component
@@ -72,7 +72,7 @@ export default function DragonCurve() {
           type="number"
           value={maxIterations}
           onChange={(e) => {
-            const val = parseInt(e.target.value)
+            const val = parseInt(e.target.value, 10)
             if (val >= 1 && val <= 15) {
               setMaxIterations(val)
             }
@@ -132,7 +132,7 @@ function drawDragonCurve(
   // Calculate line length based on iteration
   // Smaller lengths for higher iterations to fit the curve
   const baseLength = Math.min(width, height) / 3
-  const length = baseLength / Math.pow(1.4, iteration)
+  const length = baseLength / 1.4 ** iteration
 
   // Starting position (centered, offset down)
   let x = width / 2.5
@@ -154,13 +154,14 @@ function drawDragonCurve(
   // Process each command
   for (const command of commands) {
     switch (command) {
-      case "F":
+      case "F": {
         // Move forward and draw
         const radians = (angle * Math.PI) / 180
         x += length * Math.cos(radians)
         y += length * Math.sin(radians)
         ctx.lineTo(x, y)
         break
+      }
 
       case "+":
         // Turn right

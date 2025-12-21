@@ -5,12 +5,7 @@
  * and provides a button to initiate Stripe checkout.
  */
 
-import {
-  Button,
-  DialogTitle,
-  Text,
-  VStack,
-} from "@chakra-ui/react"
+import { Button, DialogTitle, Text, VStack } from "@chakra-ui/react"
 import { useMutation } from "@tanstack/react-query"
 import { FaStar } from "react-icons/fa"
 
@@ -59,12 +54,8 @@ const UpgradeModal = ({ isOpen, onClose }: UpgradeModalProps) => {
         </DialogHeader>
         <DialogBody>
           <VStack gap={4} align="start">
-            <Text>
-              You've reached the free tier limit of 2 items.
-            </Text>
-            <Text>
-              Upgrade to Premium for just $1 to unlock:
-            </Text>
+            <Text>You've reached the free tier limit of 2 items.</Text>
+            <Text>Upgrade to Premium for just $1 to unlock:</Text>
             <VStack align="start" pl={4} gap={1}>
               <Text>- Unlimited items</Text>
               <Text>- Premium star badge</Text>

@@ -225,6 +225,19 @@ export const NewPasswordSchema = {
     title: 'NewPassword'
 } as const;
 
+export const PremiumStatusResponseSchema = {
+    properties: {
+        is_premium: {
+            type: 'boolean',
+            title: 'Is Premium'
+        }
+    },
+    type: 'object',
+    required: ['is_premium'],
+    title: 'PremiumStatusResponse',
+    description: "Response containing user's premium status."
+} as const;
+
 export const PrivateUserCreateSchema = {
     properties: {
         email: {

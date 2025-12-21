@@ -29,6 +29,35 @@ class CheckoutSessionResponse(BaseModel):
     checkout_url: str
 
 
+class PremiumStatusResponse(BaseModel):
+    """Response containing user's premium status."""
+
+    is_premium: bool
+
+
+@router.get("/status", response_model=PremiumStatusResponse)
+def get_premium_status(
+    session: SessionDep,
+    current_user: CurrentUser,
+) -> PremiumStatusResponse:
+    """
+    Get the current user's premium status.
+
+    Returns whether the user has an active premium subscription.
+    Used by frontend to display premium badge and features.
+    """
+    logger.debug(f"Checking premium status for user {current_user.id}")
+
+    premium_user = session.exec(
+        select(PremiumUser).where(PremiumUser.user_id == current_user.id)
+    ).first()
+
+    is_premium = premium_user is not None and premium_user.is_premium
+    logger.debug(f"User {current_user.id} premium status: {is_premium}")
+
+    return PremiumStatusResponse(is_premium=is_premium)
+
+
 @router.post("/create-checkout-session", response_model=CheckoutSessionResponse)
 def create_checkout_session(
     session: SessionDep,
@@ -74,6 +103,7 @@ def create_checkout_session(
                 }
             ],
             mode="payment",
+            customer_creation="always",  # Ensure customer is created for webhook
             success_url=f"{settings.FRONTEND_HOST}/payment-success?session_id={{CHECKOUT_SESSION_ID}}",
             cancel_url=f"{settings.FRONTEND_HOST}/settings",
             metadata={
@@ -81,7 +111,9 @@ def create_checkout_session(
             },
         )
 
-        logger.debug(f"Created checkout session {checkout_session.id} for user {current_user.id}")
+        logger.debug(
+            f"Created checkout session {checkout_session.id} for user {current_user.id}"
+        )
 
         return CheckoutSessionResponse(checkout_url=checkout_session.url)
 
@@ -110,7 +142,7 @@ async def stripe_webhook(request: Request, session: SessionDep) -> dict:
     stripe = get_stripe_client()
 
     try:
-        event = stripe.webhooks.Webhook.construct_event(
+        event = stripe.Webhook.construct_event(
             payload, sig_header, settings.STRIPE_WEBHOOK_SECRET
         )
     except ValueError as e:

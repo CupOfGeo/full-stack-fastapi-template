@@ -1,9 +1,8 @@
 import { Box, Container, Text } from "@chakra-ui/react"
 import { createFileRoute } from "@tanstack/react-router"
-
-import useAuth from "@/hooks/useAuth"
 // import DragonCurve from "@/components/Dashboard/DragonCurve"
 import CoralGrowth from "@/components/Dashboard/CoralGrowth"
+import useAuth from "@/hooks/useAuth"
 
 export const Route = createFileRoute("/_layout/")({
   component: Dashboard,

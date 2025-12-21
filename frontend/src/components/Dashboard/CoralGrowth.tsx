@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react"
 import { Box, Input, Text, VStack } from "@chakra-ui/react"
+import { useEffect, useRef, useState } from "react"
 
 /**
  * CoralGrowth Component
@@ -78,7 +78,7 @@ export default function CoralGrowth() {
           type="number"
           value={maxIterations}
           onChange={(e) => {
-            const val = parseInt(e.target.value)
+            const val = parseInt(e.target.value, 10)
             if (val >= 1 && val <= 8) {
               setMaxIterations(val)
             }
@@ -98,8 +98,8 @@ export default function CoralGrowth() {
           type="number"
           value={seed}
           onChange={(e) => {
-            const val = parseInt(e.target.value)
-            if (!isNaN(val)) {
+            const val = parseInt(e.target.value, 10)
+            if (!Number.isNaN(val)) {
               setSeed(val)
             }
           }}
@@ -115,8 +115,8 @@ export default function CoralGrowth() {
           type="number"
           value={hue}
           onChange={(e) => {
-            const val = parseInt(e.target.value)
-            if (!isNaN(val) && val >= 0 && val <= 360) {
+            const val = parseInt(e.target.value, 10)
+            if (!Number.isNaN(val) && val >= 0 && val <= 360) {
               setHue(val)
             }
           }}
@@ -193,7 +193,6 @@ export default function CoralGrowth() {
     </VStack>
   )
 }
-
 
 /**
  * Generate coral L-system string with parametric thickness using stochastic rules
@@ -337,7 +336,7 @@ function drawCoral(
 ) {
   // Calculate base line length
   const baseLength = Math.min(width, height) / 8
-  const length = baseLength / Math.pow(1.3, iteration * 0.5)
+  const length = baseLength / 1.3 ** (iteration * 0.5)
 
   // Starting position (bottom center)
   const turtle: TurtleState = {
@@ -437,7 +436,7 @@ function drawCoral(
         i++
         break
 
-      case "]":
+      case "]": {
         // Draw polyp at branch tip before popping state
         const polyRadius = turtle.thickness * 12 // Circle size based on branch thickness
         const lightness = 40 + (1 - turtle.thickness) * 40
@@ -456,6 +455,7 @@ function drawCoral(
         }
         i++
         break
+      }
 
       default:
         i++

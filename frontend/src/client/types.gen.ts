@@ -51,6 +51,13 @@ export type NewPassword = {
     new_password: string;
 };
 
+/**
+ * Response containing user's premium status.
+ */
+export type PremiumStatusResponse = {
+    is_premium: boolean;
+};
+
 export type PrivateUserCreate = {
     email: string;
     password: string;
@@ -177,6 +184,8 @@ export type PrivateCreateUserData = {
 };
 
 export type PrivateCreateUserResponse = (UserPublic);
+
+export type StripeGetPremiumStatusResponse = (PremiumStatusResponse);
 
 export type StripeCreateCheckoutSessionResponse = (CheckoutSessionResponse);
 
