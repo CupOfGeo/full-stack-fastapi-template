@@ -3,11 +3,14 @@ import { Link } from "@tanstack/react-router"
 import { FaUserAstronaut } from "react-icons/fa"
 import { FiLogOut, FiUser } from "react-icons/fi"
 
+import PremiumBadge from "@/components/Premium/PremiumBadge"
 import useAuth from "@/hooks/useAuth"
+import usePremiumStatus from "@/hooks/usePremiumStatus"
 import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from "../ui/menu"
 
 const UserMenu = () => {
   const { user, logout } = useAuth()
+  const { isPremium } = usePremiumStatus()
 
   const handleLogout = async () => {
     logout()
@@ -22,6 +25,7 @@ const UserMenu = () => {
             <Button data-testid="user-menu" variant="solid" maxW="sm" truncate>
               <FaUserAstronaut fontSize="18" />
               <Text>{user?.full_name || "User"}</Text>
+              <PremiumBadge isPremium={isPremium} size="sm" />
             </Button>
           </MenuTrigger>
 

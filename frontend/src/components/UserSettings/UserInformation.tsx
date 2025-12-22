@@ -17,6 +17,7 @@ import {
   UsersService,
   type UserUpdateMe,
 } from "@/client"
+import MembershipSection from "@/components/Premium/MembershipSection"
 import useAuth from "@/hooks/useAuth"
 import useCustomToast from "@/hooks/useCustomToast"
 import { emailPattern, handleError } from "@/utils"
@@ -141,6 +142,8 @@ const UserInformation = () => {
           )}
         </Flex>
       </Box>
+
+      <MembershipSection />
     </Container>
   )
 }

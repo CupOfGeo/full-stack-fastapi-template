@@ -55,6 +55,19 @@ export const Body_login_login_access_tokenSchema = {
     title: 'Body_login-login_access_token'
 } as const;
 
+export const CheckoutSessionResponseSchema = {
+    properties: {
+        checkout_url: {
+            type: 'string',
+            title: 'Checkout Url'
+        }
+    },
+    type: 'object',
+    required: ['checkout_url'],
+    title: 'CheckoutSessionResponse',
+    description: 'Response containing Stripe Checkout URL.'
+} as const;
+
 export const HTTPValidationErrorSchema = {
     properties: {
         detail: {
@@ -210,6 +223,19 @@ export const NewPasswordSchema = {
     type: 'object',
     required: ['token', 'new_password'],
     title: 'NewPassword'
+} as const;
+
+export const PremiumStatusResponseSchema = {
+    properties: {
+        is_premium: {
+            type: 'boolean',
+            title: 'Is Premium'
+        }
+    },
+    type: 'object',
+    required: ['is_premium'],
+    title: 'PremiumStatusResponse',
+    description: "Response containing user's premium status."
 } as const;
 
 export const PrivateUserCreateSchema = {
